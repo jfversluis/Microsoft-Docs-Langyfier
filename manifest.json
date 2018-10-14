@@ -1,0 +1,32 @@
+{
+    "name": "Microsoft Docs Langyfier",
+    "version": "1.0",
+    "description": "Stop automatic translation from the Microsoft Docs to an unwanted language.",
+    "manifest_version": 2,
+    "permissions": [
+        "webNavigation",
+        "declarativeContent",
+        "storage"
+    ],
+    "background": {
+        "scripts": [
+            "app/background.js"
+        ],
+        "persistent": false
+    },
+    "options_page": "app/settings.html",
+    "page_action": {
+        "default_popup": "app/settings.html",
+        "default_icon": {
+            "16": "img/icon16.png",
+            "32": "img/icon32.png",
+            "48": "img/icon48.png",
+            "128": "img/icon128.png"
+        }
+    },
+    "icons": {
+        "16": "img/icon16.png",
+        "48": "img/icon48.png",
+        "128": "img/icon128.png"
+    }
+}

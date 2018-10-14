@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="/lib/bootstrap-4.1.3-dist/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="jumbotron">
+                <div class="col">
+                    <h1 class="display-4">Microsoft Docs Langyfier</h1>
+                    <p class="lead">Stop automatic translation from the Microsoft Docs to an unwanted language</p>
+                    <hr class="my-4">
+                    <p>When navigating to docs.microsoft.com, the page might be translated into your native language, even through automated translations. I, however, like to just review the docs in English. There is no way to force this through Microsoft Docs right now. That is why I created this plugin.<br />
+                        <br />
+                        Simply choose a language that you do not want to see and a language that you _do_ want to see.
+                        Whenever you reach the Docs in the unwanted language, it will automaticall switch to your
+                        preferred language.<br />
+                        <br />
+                        <strong>Note: you are responsible for entering right language codes in the textboxes, there is no validation. Entering invalid values will lead to unwanted behavior.</strong>
+                    </p>
+                    <small>This extension is created by <a href="https://gerald.verslu.is" target="_blank">Gerald Versluis</a> and open-source on GitHub: <a href="https://github.com/jfversluis/" target="_blank">https://github.com/jfversluis/</a></small>
+                </div>
+            </div>
+        </div>
+
+        <form>
+            <div class="row">
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="enableExtensionCheckbox">
+                        <label class="form-check-label" for="enableExtensionCheckbox">
+                            Enable extension
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group" id="unwantedLanguageGroup">
+                        <label for="unwantedLanguagePicker">When this language is detected:</label>
+                        <input type="text" class="form-control" id="unwantedLanguagePicker" placeholder="For example: nl-nl" required />
+                        <small id="unwantedLanguagePickerHelp" class="form-text text-muted">This is the language you
+                            don't
+                            want to see, the unwanted language. For example: nl-nl</small>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group" id="preferedLanguageGroup">
+                        <label for="preferedLanguagePicker">Navigate to the page in this language:</label>
+                        <input type="text" class="form-control" id="preferedLanguagePicker" placeholder="For example: en-us" required />
+                        <small id="preferedLanguagePickerHelp" class="form-text text-muted">This is the language you do
+                            want to see, the prefered language. For example: en-us</small>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-success" id="saveButton">Save changes</button>
+            <br />
+            <br />
+            <div class="alert alert-success" role="alert" id="success-alert" style="display: none;">
+                Settings saved succesfully!
+            </div>
+            <div class="alert alert-error" role="alert" id="error-alert" style="display: none;">
+                There was a problem saving the settings. Please try again.
+            </div>
+            <div class="alert alert-warning" role="alert" id="warning-alert" style="display: none;">
+                The form is not valid, double check all values and try to save again.
+            </div>
+        </form>
+    </div>
+    <script src="/lib/jquery-3.0.0.min.js"></script>
+    <script src="/lib/popper.min.js"></script>
+    <script src="/lib/bootstrap-4.1.3-dist/js/bootstrap.min.js"></script>
+    <script src="settings.js"></script>
+</body>
+
+</html>
