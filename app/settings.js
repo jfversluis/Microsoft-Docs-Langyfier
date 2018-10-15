@@ -41,6 +41,15 @@ $(document).ready(function () {
             });
         }
     });
+
+    // Handle Open Settings on popup page
+    $("#openSettingsLink").click(function () {
+        if (chrome.runtime.openOptionsPage) {
+            chrome.runtime.openOptionsPage();
+        } else {
+            window.open(chrome.runtime.getURL('settings.html'));
+        }
+    });
 });
 
 function updateFormEnabled(enabled) {

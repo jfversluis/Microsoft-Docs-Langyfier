@@ -2,31 +2,19 @@
 <html>
 
 <head>
+    <style>
+        body {
+        width: 500px;
+        height: 250px;
+        padding: 15px;
+    }
+    </style>
     <link rel="stylesheet" href="/lib/bootstrap-4.1.3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/custom.css">
 </head>
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="jumbotron" id="jumbotron">
-                <div class="col">
-                    <h1 class="display-4">Microsoft Docs Langyfier</h1>
-                    <p class="lead">Stop automatic translation from the Microsoft Docs to an unwanted language</p>
-                    <hr class="my-4">
-                    <p>When navigating to docs.microsoft.com, the page might be translated into your native language, even through automated translations. I, however, like to just review the docs in English. There is no way to force this through Microsoft Docs right now. That is why I created this plugin.<br />
-                        <br />
-                        Simply choose a language that you do not want to see and a language that you _do_ want to see.
-                        Whenever you reach the Docs in the unwanted language, it will automaticall switch to your
-                        preferred language.<br />
-                        <br />
-                        <strong>Note: you are responsible for entering right language codes in the textboxes, there is no validation. Entering invalid values will lead to unwanted behavior.</strong>
-                    </p>
-                    <small>This extension is created by <a href="https://gerald.verslu.is" target="_blank">Gerald Versluis</a> and open-source on GitHub: <a href="https://github.com/jfversluis/Microsoft-Docs-Langyfier" target="_blank">https://github.com/jfversluis/Microsoft-Docs-Langyfier</a></small>
-                </div>
-            </div>
-        </div>
-
         <form>
             <div class="row">
                 <input class="switch-input" type="checkbox" id="enableExtensionCheckbox">
@@ -38,7 +26,8 @@
                 <div class="col">
                     <div class="form-group" id="unwantedLanguageGroup">
                         <label for="unwantedLanguagePicker">When this language is detected:</label>
-                        <input type="text" class="form-control" id="unwantedLanguagePicker" placeholder="For example: nl-nl" required />
+                        <input type="text" class="form-control" id="unwantedLanguagePicker" placeholder="For example: nl-nl"
+                            required />
                         <small id="unwantedLanguagePickerHelp" class="form-text text-muted">This is the language you
                             don't
                             want to see, the unwanted language. For example: nl-nl</small>
@@ -47,13 +36,14 @@
                 <div class="col">
                     <div class="form-group" id="preferedLanguageGroup">
                         <label for="preferedLanguagePicker">Navigate to the page in this language:</label>
-                        <input type="text" class="form-control" id="preferedLanguagePicker" placeholder="For example: en-us" required />
+                        <input type="text" class="form-control" id="preferedLanguagePicker" placeholder="For example: en-us"
+                            required />
                         <small id="preferedLanguagePickerHelp" class="form-text text-muted">This is the language you do
                             want to see, the prefered language. For example: en-us</small>
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-success" id="saveButton">Save changes</button>
+            <button type="button" class="btn btn-success" id="saveButton">Save changes</button><br /><small><a id="openSettingsLink" href="#">Open settings</a></small>
             <br />
             <br />
             <div class="alert alert-success" role="alert" id="success-alert" style="display: none;">
