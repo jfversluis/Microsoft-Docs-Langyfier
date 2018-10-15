@@ -7,8 +7,10 @@ chrome.runtime.onInstalled.addListener(function () {
         if (localStorage["enableExtension"] != "true")
             return;
 
-        if (localStorage["unwantedLanguage"] === "" || localStorage["preferedLanguage"] === "")
+        if (localStorage["unwantedLanguage"] === "" || localStorage["preferedLanguage"] === ""
+            || localStorage["unwantedLanguage"] === undefined || localStorage["preferedLanguage"] === undefined) {
             return;
+        }
 
         if (details.url.indexOf("docs.microsoft.com") != -1)
         {
