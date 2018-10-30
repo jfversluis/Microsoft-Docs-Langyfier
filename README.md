@@ -5,3 +5,5 @@ When navigating to docs.microsoft.com, the page might be translated into your na
 Simply choose a language that you do not want to see and a language that you _do_ want to see.
 Whenever you reach the Docs in the unwanted language, it will automaticall switch to your
 preferred language.
+
+Download the extension from the Chrome Web Store: https://chrome.google.com/webstore/detail/gkneebafjlcpcgahjdlmdoejhjnfleha/
