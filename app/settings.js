@@ -1,94 +1,108 @@
+let enableExtension = false;
+let unwantedLanguage = "";
+let preferredLanguage = "";
+
 $(document).ready(function () {
-    $("#enableExtensionCheckbox").prop("checked", localStorage["enableExtension"] === "true");
-    $("#unwantedLanguagePicker").val(localStorage["unwantedLanguage"]);
-    $("#preferedLanguagePicker").val(localStorage["preferedLanguage"]);
+    chrome.storage.sync.get('enableExtension', (data) => {
+        enableExtension = data.enableExtension;
+    
+        chrome.storage.sync.get('unwantedLanguage', (data) => {
+            unwantedLanguage = data.unwantedLanguage;
 
-    updateFormEnabled($("#enableExtensionCheckbox")[0].checked);
+            chrome.storage.sync.get('preferredLanguage', (data) => {
+                preferredLanguage = data.preferredLanguage;
 
-    // Handle enable/disable checkbox
-    $('#enableExtensionCheckbox').on('change', function (e) {
-        var enabled = $("#enableExtensionCheckbox")[0].checked;
-        localStorage["enableExtension"] = enabled;
+                $("#enableExtensionCheckbox").prop("checked", enableExtension == true);
+                $("#unwantedLanguagePicker").val(unwantedLanguage);
+                $("#preferredLanguagePicker").val(preferredLanguage);
 
-        updateFormEnabled(enabled);
-    });
+                updateFormEnabled($("#enableExtensionCheckbox")[0].checked);
 
-    // Handle save button click
-    $("#saveButton").click(function () {
-        try {
-            var unwanted = $('#unwantedLanguagePicker').val();
-            var prefered = $('#preferedLanguagePicker').val();
+                // Handle enable/disable checkbox
+                $('#enableExtensionCheckbox').on('change', function (e) {
+                    var enabled = $("#enableExtensionCheckbox")[0].checked;
 
-            if (unwanted === "" || prefered === "") {
-                $("#success-warning").fadeTo(2000, 500).slideUp(500, function () {
-                    $("#success-warning").slideUp(500);
+                    updateFormEnabled(enabled);
                 });
-                
-                return;
-            }
 
-            localStorage["unwantedLanguage"] = unwanted;
-            localStorage["preferedLanguage"] = prefered;
+                // Handle save button click
+                $("#saveButton").click(function () {
+                    try {
+                        var enabled = $("#enableExtensionCheckbox")[0].checked;
+                        var unwanted = $('#unwantedLanguagePicker').val();
+                        var preferred = $('#preferredLanguagePicker').val();
 
-            $("#success-alert").fadeTo(2000, 500).slideUp(500, function () {
-                $("#success-alert").slideUp(500);
+                        if (unwanted === "" || preferred === "") {
+                            $("#success-warning").fadeTo(2000, 500).slideUp(500, function () {
+                                $("#success-warning").slideUp(500);
+                            });
+                            
+                            return;
+                        }
+
+                        chrome.storage.sync.set({'enableExtension': enabled});
+                        chrome.storage.sync.set({'unwantedLanguage': unwanted});
+                        chrome.storage.sync.set({'preferredLanguage': preferred});
+
+                        $("#success-alert").fadeTo(2000, 500).slideUp(500, function () {
+                            $("#success-alert").slideUp(500);
+                        });
+                    }
+                    catch (exception)
+                    {
+                        $("#success-error").fadeTo(2000, 500).slideUp(500, function () {
+                            $("#success-error").slideUp(500);
+                        });
+                    }
+                });
+
+                // Handle Open Settings on popup page
+                $("#openSettingsLink").click(function () {
+                    if (chrome.runtime.openOptionsPage) {
+                        chrome.runtime.openOptionsPage();
+                    } else {
+                        chrome.tabs.create({
+                            url: chrome.runtime.getURL('app/settings.html')
+                        });
+                    }
+                });
+
+                var urlParams = new URLSearchParams(location.search);
+
+                if (urlParams.has("firstTime")) {
+                    AnnoButton.prototype.buttonElem = function (anno) {
+                        return $("<button class='anno-btn'></button>").html(this.textFn(anno)).addClass(this.className).click((function (_this) {
+                            return function (evt) {
+                                evt.preventDefault(); //<--Stop event from bubbling up to elements it shouldn't be fiddling with
+                                return _this.click.call(anno, anno, evt);
+                            };
+                        })(this));
+                    };
+
+                    var anno1 = new Anno([{
+                        target: '#unwantedLanguagePicker',
+                        content: 'Enter the <strong>unwanted</strong> language here, i.e.: nl-nl',
+                        position: 'top'
+                    },
+                    {
+                        target: '#preferredLanguagePicker',
+                        content: 'Enter the <strong>preferred</strong> language here, i.e.: en-us',
+                        position: 'top'
+                    },
+                    {
+                        target: '#saveButton',
+                        content: 'Click save to persist the new settings',
+                        position: 'bottom'
+                    }]);
+
+                    anno1.show();
+                }
             });
-        }
-        catch (exception)
-        {
-            $("#success-error").fadeTo(2000, 500).slideUp(500, function () {
-                $("#success-error").slideUp(500);
-            });
-        }
+        }); 
     });
-
-    // Handle Open Settings on popup page
-    $("#openSettingsLink").click(function () {
-        if (chrome.runtime.openOptionsPage) {
-            chrome.runtime.openOptionsPage();
-        } else {
-            window.open(chrome.runtime.getURL('app/settings.html'));
-        }
-    });
-
-    var urlParams = new URLSearchParams(location.search);
-
-    if (urlParams.has("firstTime")) {
-        AnnoButton.prototype.buttonElem = function (anno) {
-            return $("<button class='anno-btn'></button>").html(this.textFn(anno)).addClass(this.className).click((function (_this) {
-                return function (evt) {
-                    evt.preventDefault(); //<--Stop event from bubbling up to elements it shouldn't be fiddling with
-                    return _this.click.call(anno, anno, evt);
-                };
-            })(this));
-        };
-
-        var anno1 = new Anno([{
-            target: '#unwantedLanguagePicker',
-            content: 'Enter the <strong>unwanted</strong> language here, i.e.: nl-nl',
-            position: 'top'
-        },
-        {
-            target: '#preferedLanguagePicker',
-            content: 'Enter the <strong>preferred</strong> language here, i.e.: en-us',
-            position: 'top'
-        },
-        {
-            target: '#saveButton',
-            content: 'Click save to persist the new settings',
-            position: 'bottom'
-        },
-        {
-            target: '#toolbarIcon',
-            content: 'You can also quick-access the settings through the icon here when on the Docs pages',
-            position: 'bottom'
-        }]);
-
-        anno1.show();
-    }
 });
 
 function updateFormEnabled(enabled) {
-    $("#preferedLanguagePicker").prop('disabled', !enabled);
+    $("#preferredLanguagePicker").prop('disabled', !enabled);
     $("#unwantedLanguagePicker").prop('disabled', !enabled);
 }

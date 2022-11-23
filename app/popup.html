@@ -5,7 +5,7 @@
     <style>
         body {
         width: 500px;
-        height: 250px;
+        height: 350px;
         padding: 15px;
     }
     </style>
@@ -16,6 +16,17 @@
 <body>
     <div class="container">
         <form>
+            <div class="row">
+                <div class="alert alert-success" role="alert" id="success-alert" style="display: none;">
+                    Settings saved successfully!
+                </div>
+                <div class="alert alert-error" role="alert" id="error-alert" style="display: none;">
+                    There was a problem saving the settings. Please try again.
+                </div>
+                <div class="alert alert-warning" role="alert" id="warning-alert" style="display: none;">
+                    The form is not valid, double check all values and try to save again.
+                </div>
+            </div>
             <div class="row">
                 <input class="switch-input" type="checkbox" id="enableExtensionCheckbox">
                 <label class="switch-label" for="enableExtensionCheckbox">
@@ -35,26 +46,15 @@
                 </div>
                 <div class="col">
                     <div class="form-group" id="preferedLanguageGroup">
-                        <label for="preferedLanguagePicker">Navigate to the page in this language:</label>
-                        <input type="text" class="form-control" id="preferedLanguagePicker" placeholder="For example: en-us"
+                        <label for="preferredLanguagePicker">Navigate to the page in this language:</label>
+                        <input type="text" class="form-control" id="preferredLanguagePicker" placeholder="For example: en-us"
                             required />
-                        <small id="preferedLanguagePickerHelp" class="form-text text-muted">This is the language you do
-                            want to see, the prefered language. For example: en-us</small>
+                        <small id="preferredLanguagePickerHelp" class="form-text text-muted">This is the language you do
+                            want to see, the preferred language. For example: en-us</small>
                     </div>
                 </div>
             </div>
             <button type="button" class="btn btn-success" id="saveButton">Save changes</button><br /><small><a id="openSettingsLink" href="#">Open settings</a></small>
-            <br />
-            <br />
-            <div class="alert alert-success" role="alert" id="success-alert" style="display: none;">
-                Settings saved succesfully!
-            </div>
-            <div class="alert alert-error" role="alert" id="error-alert" style="display: none;">
-                There was a problem saving the settings. Please try again.
-            </div>
-            <div class="alert alert-warning" role="alert" id="warning-alert" style="display: none;">
-                The form is not valid, double check all values and try to save again.
-            </div>
         </form>
     </div>
     <script src="/lib/jquery-3.0.0.min.js"></script>
